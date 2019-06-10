@@ -1,0 +1,42 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+struct Entry;
+struct Entry {
+  local ulong startOffset = FTell();
+
+  uint size : 31;
+  uint hasNoChild : 1;
+  string name;
+
+  local uint restSize = size - 4 - Strlen(name) - 1;
+  if (restSize == 1)
+    byte data;
+  else if (restSize == 4)
+    uint data;
+  else if (hasNoChild) {
+    string data;
+    if (FTell() - startOffset + 4 == size)
+      uint value;
+  }
+  else while (FTell() - startOffset < size) {
+    Entry child;
+  }
+
+  if (FTell() - startOffset != size) {
+    Printf("ERROR: invalid reading %d -> %d != %d\n", startOffset, FTell(), size);
+    break;
+  }
+};
+
+while (FTell() < FileSize())
+    Entry root;

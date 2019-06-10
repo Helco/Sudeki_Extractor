@@ -1,0 +1,33 @@
+//------------------------------------------------
+//--- 010 Editor v8.0.1 Binary Template
+//
+//      File: 
+//   Authors: 
+//   Version: 
+//   Purpose: 
+//  Category: 
+// File Mask: 
+//  ID Bytes: 
+//   History: 
+//------------------------------------------------
+FSeek(FileSize() - 2060);
+struct Header {
+  char magic[3];
+  byte version;
+  uint tableSize;
+  uint unknown;
+} header;
+
+FSeek(FileSize() - 2060 - header.tableSize);
+
+struct HashEntry {
+  uint offset;
+  uint size;
+  uint nameHash;
+};
+
+struct HashBucket {
+  uint entryNum;
+  if (entryNum > 0)
+    HashEntry entries[entryNum];
+} buckets[256] <optimize=false>;
